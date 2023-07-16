@@ -17,6 +17,18 @@ import { useQuery } from "react-query";
 function Weather() {
   const [searchedVal, setSearchedVal] = useState("ajmer");
   const [weather, setweather] = useState("ajmer");
+
+  //
+  const handleInput = (event) => {
+    let searchString = event.target.value.split(' ')
+    if(searchString.length > 2){
+        event.preventDefault()
+        event.stopPropagation()
+    } else {
+        setSearchedVal(event.target.value)
+    }
+  }
+  
   // fetch weather data by open weather API 
   useEffect(() => {
     const fetchweather = async () => {
@@ -36,7 +48,7 @@ function Weather() {
         
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Search Location <input type="search" name="location" className="search" value={searchedVal} onChange={(event) => {setSearchedVal(event.target.value)}}></input>
+            Search Location <input type="search" name="location" className="search" value={searchedVal} onChange={(e) => handleInput(e)}></input>
           </Typography>
           <PlaceIcon className='pin' sx={{ color: "red" }}/> <span className='cityname'>{searchedVal.toUpperCase()}</span>
           <div className='temp'>
